@@ -4,6 +4,7 @@ interface Props {
   currentPrice: number;
   priceChangePercentage7d: number;
   logoUrl: string;
+  onPress: () => void;
 }
 
 import {
@@ -20,9 +21,10 @@ export default function ListItem({
   currentPrice,
   priceChangePercentage7d,
   logoUrl,
+  onPress,
 }: Props) {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={onPress}>
       <View className="flex flex-row px-4 mb-8 items-center justify-between w-[98%]">
         {/* Left side */}
         <View className="flex-row items-center">
