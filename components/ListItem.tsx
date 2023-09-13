@@ -6,7 +6,13 @@ interface Props {
   logoUrl: string;
 }
 
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  SafeAreaView,
+} from 'react-native';
 
 export default function ListItem({
   name,
