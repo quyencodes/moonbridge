@@ -1,5 +1,7 @@
 import axios from 'axios';
 import moment from 'moment';
+import { SAMPLE_DATA } from '../assets/data/sampleData';
+import { FALLBACK_DATA } from '../assets/data/fallbackData';
 
 import {
   SampleDataType,
@@ -54,6 +56,8 @@ export const getMarketData = async () => {
     const formattedResponse = formatMarketData(data);
     return formattedResponse;
   } catch (err) {
-    console.log(err);
+    console.log(`${err}. Populating data from assets/data/fallbackData.ts`);
+    const formattedResponse = formatMarketData(FALLBACK_DATA);
+    return formattedResponse;
   }
 };

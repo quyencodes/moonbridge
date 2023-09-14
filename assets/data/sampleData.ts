@@ -1,4 +1,4 @@
-import SampleDataType from '../../utils/types';
+import { SampleDataType } from '../../utils/types';
 
 export const SAMPLE_DATA: Array<SampleDataType> = [
   {

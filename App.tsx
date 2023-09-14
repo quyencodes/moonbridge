@@ -27,7 +27,9 @@ const ListHeader = () => {
 
 export default function App() {
   const [data, setData] = useState<SampleDataType[]>([]);
-  const [selectedCoinData, setSelectedCoinData] = useState<SampleDataType>({});
+  const [selectedCoinData, setSelectedCoinData] = useState<SampleDataType[]>(
+    {}
+  );
 
   useEffect(() => {
     const fetchMarketData = async () => {
@@ -82,14 +84,14 @@ export default function App() {
         >
           {selectedCoinData && (
             <Chart
-              currentPrice={selectedCoinData.current_price}
-              symbol={selectedCoinData.symbol}
-              logoUrl={selectedCoinData.image}
-              name={selectedCoinData.name}
+              currentPrice={selectedCoinData?.current_price}
+              symbol={selectedCoinData?.symbol}
+              logoUrl={selectedCoinData?.image}
+              name={selectedCoinData?.name}
               priceChangePercentage7d={
-                selectedCoinData.price_change_percentage_7d_in_currency
+                selectedCoinData?.price_change_percentage_7d_in_currency
               }
-              sparkline={selectedCoinData.sparkline_in_7d}
+              sparkline={selectedCoinData?.sparkline_in_7d}
             />
           )}
         </BottomSheetModal>
