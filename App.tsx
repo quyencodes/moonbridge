@@ -27,9 +27,7 @@ const ListHeader = () => {
 
 export default function App() {
   const [data, setData] = useState<SampleDataType[]>([]);
-  const [selectedCoinData, setSelectedCoinData] = useState<SampleDataType[]>(
-    {}
-  );
+  const [selectedCoinData, setSelectedCoinData] = useState<SampleDataType[]>();
 
   useEffect(() => {
     const fetchMarketData = async () => {
