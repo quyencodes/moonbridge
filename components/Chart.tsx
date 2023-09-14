@@ -1,5 +1,10 @@
 import { View, Text, Image } from 'react-native';
 
+import { Sparkline7dType } from '../utils/types/index';
+
+import { useSharedValue } from 'react-native-reanimated';
+import { useEffect } from 'react';
+
 export default function Chart({
   currentPrice,
   symbol,
@@ -8,6 +13,8 @@ export default function Chart({
   priceChangePercentage7d,
   sparkline,
 }: Props) {
+  useEffect(() => {}, []);
+
   return (
     <View className="m-8">
       {/* Titles */}
@@ -35,7 +42,7 @@ export default function Chart({
                 : 'text-md text-red-600'
             }
           >
-            {priceChangePercentage7d.toFixed(2)}%
+            {priceChangePercentage7d?.toFixed(2)}%
           </Text>
         </View>
       </View>
@@ -50,6 +57,6 @@ interface Props {
   name: string;
   priceChangePercentage7d: number;
   sparkline: {
-    price: [{ x: number; y: number }];
+    price: Array<Sparkline7dType>;
   };
 }

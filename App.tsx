@@ -1,17 +1,18 @@
 import { StatusBar } from 'expo-status-bar';
 import { Text, View, FlatList, SafeAreaView, StyleSheet } from 'react-native';
-import { useState, useRef, useMemo } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import {
   BottomSheetModal,
   BottomSheetModalProvider,
 } from '@gorhom/bottom-sheet';
+import { getMarketData } from './services/cryptoService';
 
 import ListItem from './components/ListItem';
 import Chart from './components/Chart';
 
 import { SAMPLE_DATA } from './assets/data/sampleData';
-import SampleDataType from './utils/types';
+import { SampleDataType } from './utils/types';
 
 const ListHeader = () => {
   return (
@@ -25,7 +26,17 @@ const ListHeader = () => {
 };
 
 export default function App() {
+  const [data, setData] = useState<SampleDataType[]>([]);
   const [selectedCoinData, setSelectedCoinData] = useState<SampleDataType>({});
+
+  useEffect(() => {
+    const fetchMarketData = async () => {
+      let marketData: SampleDataType[] | undefined = await getMarketData();
+      // console.log('this is the market data:', marketData);
+      setData(marketData);
+    };
+    fetchMarketData();
+  }, []);
 
   // ref
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
@@ -40,25 +51,27 @@ export default function App() {
 
   return (
     <GestureHandlerRootView className="flex-1">
-      <BottomSheetModalProvider>
+      <BottomSheetModalProvider style={styles.modalProvider}>
         <SafeAreaView className="flex-1 bg-white">
-          <FlatList
-            data={SAMPLE_DATA}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-              <ListItem
-                name={item.name}
-                symbol={item.symbol}
-                currentPrice={item.current_price}
-                priceChangePercentage7d={
-                  item.price_change_percentage_7d_in_currency
-                }
-                logoUrl={item.image}
-                onPress={() => openModal(item)}
-              />
-            )}
-            ListHeaderComponent={<ListHeader />}
-          />
+          {data && (
+            <FlatList
+              data={data}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => (
+                <ListItem
+                  name={item.name}
+                  symbol={item.symbol}
+                  currentPrice={item.current_price}
+                  priceChangePercentage7d={
+                    item.price_change_percentage_7d_in_currency
+                  }
+                  logoUrl={item.image}
+                  onPress={() => openModal(item)}
+                />
+              )}
+              ListHeaderComponent={<ListHeader />}
+            />
+          )}
           <StatusBar style="auto" />
         </SafeAreaView>
         <BottomSheetModal
@@ -86,6 +99,9 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  modalProvider: {
+    backgroundColor: '#ffffff',
+  },
   bottomSheet: {
     shadowColor: '#000',
     shadowOffset: {

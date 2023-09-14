@@ -53,7 +53,7 @@ export default function ListItem({
                 : 'text-sm text-red-600'
             }
           >
-            {priceChangePercentage7d.toFixed(2)}%
+            {priceChangePercentage7d?.toFixed(2)}%
           </Text>
         </View>
       </View>
